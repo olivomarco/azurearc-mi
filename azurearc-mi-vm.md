@@ -1,6 +1,6 @@
-# Zero-trust authentication in hybrid/multicloud scenarios using Azure Arc
+# Passwordless authentication in hybrid/multicloud scenarios using Azure Arc
 
-In a world where IT is subject to challenges of using cloud services from multiple cloud service providers and having a legacy of IT systems on-prem or on the edge, customers desperately search a technology to **seamlessly integrate applications** running in these different worlds and **improve your security posture** by using zero-trust authentication.
+In a world where IT is subject to challenges of using cloud services from multiple cloud service providers and having a legacy of IT systems on-prem or on the edge, customers desperately search a technology to **seamlessly integrate applications** running in these different worlds and **improve your security posture** by using passwordless authentication.
 
 Consider this sample hybrid scenario: a business application (say, a web portal) resides on-prem and receives orders from customers. In an evolutionary path, this application needs to add modern functionalities such as custom vision or voice recognition to better serve its customers.
 
@@ -8,7 +8,7 @@ These are challenges well solved by cloud AI services, and implementing them on-
 
 ![Diagram of the hybrid and multi-cloud challenge](/images/diagram.png)
 
-In this article we will implement a zero-trust authentication mechanism between resources on-prem (hybrid) or other Cloud Service Providers (multi-cloud) that need to access to Azure resources, all using Azure Arc.
+In this article we will implement a passwordless authentication mechanism between resources on-prem (hybrid) or other Cloud Service Providers (multi-cloud) that need to access to Azure resources, all using Azure Arc.
 
 We will dig through the technology at high level, and then share some sample code.
 
@@ -30,7 +30,7 @@ Alas, sometimes these secrets are not handled properly (often even committed to 
 
 You need a way to authenticate your application **transparently** by trusting the service that it runs on against your target. For instance, if your application is a simple application running on a VM and you need to connect the application to a DB, you need a way to get an identity from the VM, and spend it against your DB.
 
-In Azure terms, this is known as a [Managed Identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). To simplify things, we won't make a distinction between System Assigned and User Assigned Managed Identities: let's just take for granted that, *inside* Azure, you can use a Managed Identity to do a zero-trust authentication between applications and the resources they use.
+In Azure terms, this is known as a [Managed Identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). To simplify things, we won't make a distinction between System Assigned and User Assigned Managed Identities: let's just take for granted that, *inside* Azure, you can use a Managed Identity to do a passwordless authentication between applications and the resources they use.
 
 ## Bringing Managed Identity to hybrid and multi-cloud
 
@@ -46,7 +46,7 @@ This diagram shows the solution to our challenge:
 
 ![Authentication flow diagram](/images/solution.png)
 
-## Enough talking, show me the code!
+## Enough talking, show me the code
 
 In this paragraph we will explore how SDKs provided by Microsoft can be used to authenticate a VM to, for example, an Azure KeyVault to read a secret without having to use a secret to authenticate to the KeyVault itself.
 We will use a specific language (Python) and one operating system (Linux) to do this, just to demonstrate that this technology is totally portable.
@@ -114,6 +114,7 @@ sudo usermod -a -G himds $USER
 ```
 
 Finally, let's run the script and see the output:
+
 ```bash
 $ python access.py
 KeyVault secret is: Azure Arc is cool
