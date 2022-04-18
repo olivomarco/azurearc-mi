@@ -103,7 +103,7 @@ secret = secret_client.get_secret("my-onprem-secret")
 print("KeyVault secret is: " + secret.value)
 ```
 
-(refer also [this file](/code/access.py))
+(refer also to [this file](/code/access.py))
 
 See? No username or passwords used or written in the code or anywhere else.
 
