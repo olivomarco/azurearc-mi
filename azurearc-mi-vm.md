@@ -53,7 +53,7 @@ We will use a specific language (Python) and one operating system (Linux) to do 
 
 KeyVault, of course, is just an example and can be substituted with any Azure service.
 
-Our machine will be a Virtual Machine named `arc-server.lab` running on a local Proxmox (KVM) server, and will connect to Azure Cloud to our KeyVault named `zerotrust-arc-kv`.
+Our machine will be a Virtual Machine named `arc-server.lab` running on a local Proxmox (KVM) server, and will connect to Azure Cloud to our KeyVault named `passwordless-arc-mi`.
 
 We will also assume that this machine has already been onboarded to Arc by installing the agent on it [as per instructions](https://docs.microsoft.com/en-us/azure/azure-arc/servers/onboard-portal). The VM will be onboarded in Azure Arc with the name `arc-server`.
 
@@ -98,7 +98,7 @@ os.environ["IMDS_ENDPOINT"] = "http://localhost:40342"
 
 credentials = ManagedIdentityCredential()
 
-secret_client = SecretClient(vault_url="https://zerotrust-arc-kv.vault.azure.net", credential=credentials)
+secret_client = SecretClient(vault_url="https://passwordless-arc-mi.vault.azure.net", credential=credentials)
 secret = secret_client.get_secret("my-onprem-secret")
 print("KeyVault secret is: " + secret.value)
 ```
